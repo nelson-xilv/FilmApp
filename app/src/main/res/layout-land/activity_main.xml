@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_film_app"
-    tools:context=".MainActivity">
+    android:background="@color/white_film_app">
 
     <TextView
         android:id="@+id/title"
@@ -32,6 +31,6 @@
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:listitem="@layout/item_film"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"/>
+        app:spanCount="3"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
