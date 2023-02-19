@@ -1,31 +1,44 @@
 package com.nelsonxilv.filmapp
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nelsonxilv.filmapp.databinding.ItemFilmBinding
 import com.nelsonxilv.filmapp.model.Film
 
-class FilmsAdapter : RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>() {
+interface FilmActionListener {
+    fun onFilmDetails(film: Film)
+}
+
+class FilmsAdapter(
+    private val actionListener: FilmActionListener
+) : RecyclerView.Adapter<FilmsAdapter.FilmViewHolder>(), View.OnClickListener {
 
     var films: List<Film> = emptyList()
-        set(newValue) {
-            field = newValue
-            notifyDataSetChanged()
-        }
+
+    override fun onClick(view: View) {
+        val film = view.tag as Film
+        actionListener.onFilmDetails(film)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemFilmBinding.inflate(inflater, parent, false)
+
+        binding.root.setOnClickListener(this)
+
         return FilmViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: FilmViewHolder, position: Int) {
         val film = films[position]
         with(holder.binding) {
-            nameFilm.setText(film.name)
-            descriptionFilm.setText(film.description)
-            photoFilm.setImageResource(R.drawable.film)
+            holder.itemView.tag = film
+
+            nameFilmTextView.setText(film.name)
+            descriptionFilmTextview.setText(film.description)
+            posterFilmImageview.setImageResource(R.drawable.film_poster)
         }
     }
 
